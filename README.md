@@ -1,56 +1,128 @@
-# Welcome to your Expo app 👋
+# 🌌 AntiGravity: AI-Agentic Service Orchestration Platform
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+> **The Invisible Brain Behind Instant Service Delivery**
 
-## Get started
+AntiGravity is a **mobile-first, AI-driven service orchestration platform** designed for the informal gig economy. Unlike generic marketplaces that handle transactions reactively, **AntiGravity serves as the intelligent orchestrator for the entire service lifecycle**.
 
-1. Install dependencies
+The platform features:
+- ✅ **Customer-side AI**: Understands service requests in English, Urdu, and Roman Urdu
+- ✅ **Provider-side AI**: Context-aware conversation with real-time booking coordination  
+- ✅ **Multi-agent Pipeline**: Language detection → Intent extraction → Provider ranking → Dynamic pricing → Dispute resolution
+- ✅ **State Machine Enforcement**: Immutable transaction lifecycle with 9 sequential states
+- ✅ **Real-time Coordination**: GPS tracking, geofencing, and live provider-customer sync
+- ✅ **Complete Audit Trail**: Every agent decision is traced and logged for verification
 
+---
+
+## 🏗️ Architectural Overview
+
+AntiGravity bridges Next.js administrative simulation dashboards and mobile React Native client views with a unified, state-safe orchestrator engine.
+
+```mermaid
+graph TD
+    UI[Mobile App & Admin Dashboard] -->|Intake Request / Actions| AG[AntiGravity Core Orchestrator]
+    AG -->|Detect Language| LA[Language Normalization Agent]
+    AG -->|Extract Slots & Parameters| IA[Intent Extraction Agent]
+    AG -->|Compute Scoring & Pricing| RA[Ranking & Pricing Agent]
+    AG -->|Enforce State Progression| SM[State Machine Enforcer]
+    AG -->|Raise Disputes & Compensation| DM[Dispute Mediation Agent]
+    SM -->|Save Immutably| TS[Trace Service Ledger]
+    TS -->|Mock Mode| AS[Local AsyncStorage / LocalStorage]
+    TS -->|Real Mode| SB[(Remote Supabase Tables)]
+```
+
+---
+
+## 🤖 Agents Developed
+
+The engine utilizes a **multi-agent pipeline** where specialized agents collaborate sequentially:
+
+1. **Language Normalization Agent (`LanguageAgent`)**
+   - **Role**: Automatically detects input languages including standard English, Urdu script, and Roman Urdu (e.g., *"AC kharab ho gaya hai, jaldi kisi electrician ko bhejien"*).
+   - **Output**: Standardized text, detected locale, and extraction confidence score.
+
+2. **Intent & Slot Extraction Agent (`IntentAgent`)**
+   - **Role**: Extracts semantic slots from noisy multilingual descriptions including service category, target budget limits, scheduling times, and urgency flags.
+   - **Output**: Typed intent payloads (e.g., `category: "ac-tech"`, `urgency: "urgent"`).
+
+3. **Provider Discovery & Ranking Agent (`RankingAgent`)**
+   - **Role**: Scans active provider nodes and scores them using a multi-factor weight formula:
+     $$\text{Score} = (\text{Rating} \times 0.45) + (\text{Distance Score} \times 0.35) + (\text{Experience Score} \times 0.20)$$
+   - **Output**: Ranked array of top matching local service providers.
+
+4. **Dynamic Pricing Agent (`PricingAgent`)**
+   - **Role**: Protects transaction fairness by locking price quotes before acceptance:
+     $$\text{Price} = (\text{Base Price} \times 1.5 + \text{Distance Overrides}) \times \text{Demand Multiplier}$$
+   - *A 35% surge multiplier is automatically applied if high urgency is flagged.*
+
+5. **Dispute Mediation Agent (`DisputeAgent`)**
+   - **Role**: Programmatically reviews client claims against timeline logs and completion reports.
+   - **Output**: Assigns severity levels (`LOW`, `MEDIUM`, `HIGH`) and generates recommended partial or total refunds (e.g., 50% refund for incomplete tasks).
+
+---
+
+## 🔄 E2E State Machine Engine (9 Target States)
+
+AntiGravity strictly enforces a sequential, non-bypassable transaction state machine. Any out-of-order state mutations are instantly rejected with detailed error payloads:
+
+```
+[requested] ──> [pending] ──> [accepted] ──> [en_route] ──> [arrived] ──> [in_progress] ──> [completed] ──> [flagged] ──> [archived]
+```
+
+- **`requested`**: Validates request details (address normalization, category matches).
+- **`pending`**: Holds ranked providers and locks in the dynamic pricing quote.
+- **`accepted`**: Lock provider node and fire real-time WebSocket notifications to the client.
+- **`en_route`**: Streams GPS location coordinates dynamically as the provider travels.
+- **`arrived`**: Triggers a geofence verification algorithm (<50m distance radius) to auto-arrive.
+- **`in_progress`**: Opens active service logs and blocks other state changes.
+- **`completed`**: Requires completion proof description before generating final invoices.
+- **`flagged`**: Initiated if client raises a dispute post-completion; runs the AI mediation recommended settlement.
+- **`archived`**: Submits user feedback (1-5★ review) and recalculates the provider's global aggregate rating.
+
+---
+
+## 🔌 API & Integration Layer
+
+The platform is designed to transition seamlessly between offline demo modes and active cloud networks:
+
+### 1. Mock Mode (Default)
+- **Local Storage Ledger**: Emulates offline database transactions using React Native `AsyncStorage` and browser `localStorage`.
+- **Intake Pipelines**: Fully simulated multi-agent NLP pipelines with standard latency delays for responsive UI feedback.
+- **Coordinate Simulators**: Live coordinates streaming and distance controllers verifying geofencing boundaries locally.
+
+### 2. Real Mode (Supabase + Google Maps)
+- **Database Schema**: Leverages Supabase relational tables (`profiles`, `bookings`, `agent_traces`, `reviews`). Detailed seed configurations reside in [docs/seed.sql](docs/seed.sql).
+- **Real-Time Subscriptions**: Listens to real-time provider state updates and coordinates streaming using Supabase Realtime channels.
+- **Location Enrichment**: Uses Google Maps and Places API boundaries to resolve normalized location coordinates and travel eta.
+
+---
+
+## 📱 UI/UX & Keyboard Safety Design
+
+Special attention was paid to the mobile React Native interface to maintain responsiveness on both standard mobile viewports and large tablets:
+
+- **Soft Keyboard Viewports**: `AssistantChatScreen.tsx` utilizes dynamic `KeyboardAvoidingView` offsets combined with screen safe areas (`useSafeAreaInsets`) to ensure keyboard inputs never overlay or hide the chat composer.
+- **Touch Target Dimensions**: Tap actions like category chips (`CategoryChipBar.tsx`) are constrained to a minimum height of `44px` with generous `hitSlop` bounding boxes, ensuring full accessibility.
+- **Visual Grid Systems**: Glassmorphic designs are supported by scalable pixel ratios in `src/utils/responsive.ts` to adjust layout grid densities proportionally.
+
+---
+
+## 🚀 Quick Start & E2E Auditing
+
+1. Install dependencies:
    ```bash
    npm install
    ```
-
-2. Start the app
-
+2. Run the complete programmatical E2E Quality Assurance and state machine audit:
    ```bash
-   npx expo start
+   node verify_e2e.js
    ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-### Other setup steps
-
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+3. To view the administrative telemetry simulator, open the Next.js platform:
+   ```bash
+   cd service-orchestration-platform
+   npm install
+   npm run dev
+   ```
+4. Open the generated audit artifacts:
+   - Interactive Report: [e2e_verification_report.md](file:///home/kali/.gemini/antigravity/brain/1061ffc4-57f6-4472-8dc5-11c2a1d2edb2/e2e_verification_report.md)
+   - Diagnostic Timeline: `docs/e2e_verification_audit_traces.json`

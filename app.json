@@ -1,44 +1,57 @@
 {
   "expo": {
-    "name": "ai-service-orchestration",
-    "slug": "ai-service-orchestration",
+    "name": "AntiGravity",
+    "slug": "AntiGravity",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "scheme": "aiserviceorchestration",
-    "userInterfaceStyle": "automatic",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
     "ios": {
-      "icon": "./assets/expo.icon"
+      "supportsTablet": true,
+      "bundleIdentifier": "com.anonymous.AntiGravity",
+      "infoPlist": {
+        "NSMicrophoneUsageDescription": "AntiGravity needs microphone access to convert your speech into text.",
+        "NSSpeechRecognitionUsageDescription": "AntiGravity uses speech recognition to turn your voice into a message."
+      }
     },
     "android": {
-      "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/images/android-icon-foreground.png",
-        "backgroundImage": "./assets/images/android-icon-background.png",
-        "monochromeImage": "./assets/images/android-icon-monochrome.png"
+      "permissions": ["RECORD_AUDIO"],
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyCC2OEcWzwCQ5n3ukcAG3RA1cHyLVGvDQ0"
+        }
       },
-      "predictiveBackGestureEnabled": false
-    },
-    "web": {
-      "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "edgeToEdgeEnabled": true,
+      "predictiveBackGestureEnabled": false,
+      "package": "com.anonymous.AntiGravity"
     },
     "plugins": [
-      "expo-router",
       [
-        "expo-splash-screen",
+        "expo-speech-recognition",
         {
-          "backgroundColor": "#208AEF",
-          "android": {
-            "image": "./assets/images/splash-icon.png",
-            "imageWidth": 76
-          }
+          "microphonePermission": "Allow AntiGravity to use the microphone for speech-to-text.",
+          "speechRecognitionPermission": "Allow AntiGravity to use speech recognition for voice input.",
+          "androidSpeechServicePackages": ["com.google.android.googlequicksearchbox", "com.google.android.tts", "com.google.android.as"]
         }
       ]
     ],
-    "experiments": {
-      "typedRoutes": true,
-      "reactCompiler": true
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "7ae248fc-aca1-4e18-87d3-7ade0b43398d"
+      }
     }
   }
 }
