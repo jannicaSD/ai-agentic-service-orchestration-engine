@@ -16,22 +16,8 @@ The platform features:
 
 ## 🏗️ Architectural Overview
 
-AntiGravity bridges Next.js administrative simulation dashboards and mobile React Native client views with a unified, state-safe orchestrator engine.
+<img width="935" height="812" alt="image" src="https://github.com/user-attachments/assets/37ddb9af-603e-4751-9e12-e84331753f56" />
 
-```mermaid
-graph TD
-    UI[Mobile App & Admin Dashboard] -->|Intake Request / Actions| AG[AntiGravity Core Orchestrator]
-    AG -->|Detect Language| LA[Language Normalization Agent]
-    AG -->|Extract Slots & Parameters| IA[Intent Extraction Agent]
-    AG -->|Compute Scoring & Pricing| RA[Ranking & Pricing Agent]
-    AG -->|Enforce State Progression| SM[State Machine Enforcer]
-    AG -->|Raise Disputes & Compensation| DM[Dispute Mediation Agent]
-    SM -->|Save Immutably| TS[Trace Service Ledger]
-    TS -->|Mock Mode| AS[Local AsyncStorage / LocalStorage]
-    TS -->|Real Mode| SB[(Remote Supabase Tables)]
-```
-
----
 
 ## 🤖 Agents Developed
 
